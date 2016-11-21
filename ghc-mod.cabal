@@ -25,7 +25,7 @@ Description:
   For more information, please see its home page.
 
 Category:               GHC, Development
-Cabal-Version:          >= 1.14
+Cabal-Version:          >= 1.24
 Build-Type:             Custom
 Data-Files:             elisp/Makefile
                         elisp/*.el
@@ -99,9 +99,10 @@ Extra-Source-Files:     ChangeLog
 
 Custom-Setup
   Setup-Depends:         base
-                       , Cabal < 1.25
+                       , Cabal >= 1.24 && < 1.25
                        , containers
                        , filepath
+                       , directory
                        , process
                        , template-haskell
                        , transformers
@@ -214,6 +215,22 @@ Executable ghc-mod
   Default-Language:     Haskell2010
   Main-Is:              GHCMod.hs
   Other-Modules:        Paths_ghc_mod
+  HS-Source-Dirs:       src, .
+  GHC-Options:          -Wall
+  Build-Depends:        base      < 5 && >= 4.0
+                      , directory < 1.3
+                      , filepath  < 1.5
+                      , process   < 1.5
+
+                      , deepseq   < 1.5
+                      , binary    < 0.9 && >= 0.5.1.0
+                      , old-time  < 1.2
+                      , time      < 1.7
+
+Executable ghc-mod-real
+  Default-Language:     Haskell2010
+  Main-Is:              GHCModReal.hs
+  Other-Modules:        Paths_ghc_mod
                       , GHCMod.Options
                       , GHCMod.Options.Commands
                       , GHCMod.Version
@@ -233,6 +250,8 @@ Executable ghc-mod
                       , fclabels  ==2.0.*
                       , optparse-applicative >=0.11.0 && <0.13.0
                       , ghc-mod
+  X-Internal:           True
+
 
 Executable ghc-modi
   Default-Language:     Haskell2010
